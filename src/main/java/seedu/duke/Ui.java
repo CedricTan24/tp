@@ -1,7 +1,9 @@
 package seedu.duke;
 
 //can be customised more, problems for later
+
 import java.util.Scanner;
+
 public class Ui {
     private final Scanner scanner = new Scanner(System.in);
 
@@ -10,7 +12,7 @@ public class Ui {
         return scanner.nextLine().trim();
     }
 
-    public void showHelp(){
+    public void showHelp() {
         System.out.println("Listing all current transactions: `list`");
         System.out.println("Adding an expense: `add [category]/PRICE`\n" +
                 " - Category can be any user-initiated category for now.");
@@ -21,7 +23,7 @@ public class Ui {
         System.out.println("Exiting the program: `exit`");
     }
 
-    public void showWelcomeMessage(){
+    public void showWelcomeMessage() {
         System.out.println("Welcome to MoneyBagProMax, give us your money.");
         System.out.println("Enter `help` to check the list of available commands.");
     }

@@ -4,9 +4,10 @@ package seedu.duke;
 public class Parser {
     /**
      * Checks user command and calls functions according to the command
+     *
      * @param input user input string
-     * @param list the current list of transactions
-     * @param ui ui class
+     * @param list  the current list of transactions
+     * @param ui    ui class
      */
     public void parse(String input, TransactionList list, Ui ui) {
         if (input.startsWith("add ")) {//can replace with "add income" for priority
@@ -24,15 +25,12 @@ public class Parser {
                 Expense expense = new Expense(category, amount);
                 list.add(expense);
                 ui.showMessage("Added: " + expense);
-            }
-            catch (NumberFormatException e) {
+            } catch (NumberFormatException e) {
                 ui.showMessage("Invalid price.");
             }
-        }
-        else if (input.startsWith("help")) {
+        } else if (input.startsWith("help")) {
             ui.showHelp();
-        }
-        else {
+        } else {
             ui.showMessage("Unknown command.");
         }
     }

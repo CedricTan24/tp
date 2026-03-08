@@ -12,10 +12,12 @@ public abstract class Transaction {
         this.category = category;
         this.amount = amount;
     }
+
     //can be used for list command
     public double getAmount() {
         return amount;
     }
+
     public String getCategory() {
         return category;
     }
