@@ -24,12 +24,15 @@ public class Parser {
                 Expense expense = new Expense(category, amount);
                 list.add(expense);
                 ui.showMessage("Added: " + expense);
-            } catch (NumberFormatException e) {
+            }
+            catch (NumberFormatException e) {
                 ui.showMessage("Invalid price.");
             }
-        } else if (input.startsWith("help")) {
+        }
+        else if (input.startsWith("help")) {
             ui.showHelp();
-        } else {
+        }
+        else {
             ui.showMessage("Unknown command.");
         }
     }
