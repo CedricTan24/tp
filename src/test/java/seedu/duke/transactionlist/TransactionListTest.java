@@ -79,4 +79,62 @@ public class TransactionListTest {
         assertEquals(expense2, removed);
         assertEquals(1, list.size());
     }
+
+    @Test
+    public void get_firstTransaction_returnsCorrectTransaction() {
+        TransactionList list = new TransactionList();
+
+        Expense expense1 = new Expense("food", 5.0);
+        Expense expense2 = new Expense("transport", 2.0);
+
+        list.add(expense1);
+        list.add(expense2);
+
+        assertEquals(expense1, list.get(0));
+    }
+
+    @Test
+    public void get_lastTransaction_returnsCorrectTransaction() {
+        TransactionList list = new TransactionList();
+
+        Expense expense1 = new Expense("food", 5.0);
+        Expense expense2 = new Expense("transport", 2.0);
+
+        list.add(expense1);
+        list.add(expense2);
+
+        assertEquals(expense2, list.get(1));
+    }
+
+    @Test
+    public void remove_firstTransaction_remainingTransactionsShiftCorrectly() {
+        TransactionList list = new TransactionList();
+
+        Expense expense1 = new Expense("food", 5.0);
+        Expense expense2 = new Expense("transport", 2.0);
+
+        list.add(expense1);
+        list.add(expense2);
+
+        list.remove(0);
+
+        assertEquals(expense2, list.get(0));
+    }
+
+    @Test
+    public void remove_middleTransaction_listUpdatesCorrectly() {
+        TransactionList list = new TransactionList();
+
+        Expense expense1 = new Expense("food", 5.0);
+        Expense expense2 = new Expense("transport", 2.0);
+        Expense expense3 = new Expense("rent", 100.0);
+
+        list.add(expense1);
+        list.add(expense2);
+        list.add(expense3);
+
+        list.remove(1);
+
+        assertEquals(expense3, list.get(1));
+    }
 }
