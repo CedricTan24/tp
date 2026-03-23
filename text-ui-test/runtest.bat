@@ -30,7 +30,8 @@ if errorlevel 1 (
     exit /b 1
 )
 cd ..\..\text-ui-test
-powershell -NoProfile -Command "(Get-Content ACTUAL.TXT -Raw) -replace '\x1b\[[0-9;]*[a-zA-Z]', '' | Set-Content ACTUAL.TXT -Encoding UTF8"
+powershell -NoProfile -Command ^
+    "$text = (Get-Content ACTUAL.TXT -Raw) -replace '\x1b\[[0-9;]*[a-zA-Z]', ''; [System.IO.File]::WriteAllText('ACTUAL.TXT', $text, (New-Object System.Text.UTF8Encoding $False))"
 echo [PASS] Application run
 
 :: ── step 4: resolve date placeholder ─────────────────────────────────────────
@@ -40,7 +41,7 @@ for /f "tokens=1-3 delims=-" %%a in (
 ) do set TODAY=%%a-%%b-%%c
 
 powershell -NoProfile -Command ^
-    "(Get-Content EXPECTED.TXT) -replace '\{TODAY\}', '%TODAY%' | Set-Content EXPECTED-RESOLVED.TXT"
+    "$text = (Get-Content EXPECTED.TXT -Raw) -replace '\{TODAY\}', '%TODAY%'; [System.IO.File]::WriteAllText('EXPECTED-RESOLVED.TXT', $text, (New-Object System.Text.UTF8Encoding $False))"
 if errorlevel 1 (
     echo [FAIL] Could not resolve {TODAY} placeholder in EXPECTED.TXT
     exit /b 1
