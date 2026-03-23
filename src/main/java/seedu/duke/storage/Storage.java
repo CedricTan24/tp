@@ -19,6 +19,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 
+/**
+ * Flat-file persistent storage for MoneyBagProMax.
+ * Reads and writes transactions to {@code data/transactions.txt}.
+ */
 public class Storage {
 
     private static final String DATA_DIR  = "data";
@@ -30,8 +34,10 @@ public class Storage {
 
 
     /**
-     * Reads persisted transactions from disk into the provided TransactionList.
-     * Call once in MoneyBagProMax.main() before the input loop.
+     * Populates the transaction list from disk. Call once on app startup.
+     *
+     * @param list TransactionList, required — the list to load transactions into.
+     * @throws MoneyBagProMaxException if the file cannot be read.
      */
     public void load(TransactionList list) throws MoneyBagProMaxException {
         try {
@@ -42,7 +48,6 @@ public class Storage {
                 return; 
             }
 
-            // TransactionList has no clear() — drain it manually
             while (!list.isEmpty()) list.remove(0);
             for (String line : Files.readAllLines(p)) {
                 if (!line.startsWith(TXN_PREFIX)) continue;
@@ -56,7 +61,7 @@ public class Storage {
                 Transaction t = switch (type) {
                     case "income"  -> new Income(category, amount, description, date);
                     case "expense" -> new Expense(category, amount, description, date);
-                    default        -> null; // unknown type — skip
+                    default        -> null;
                 };
                 if (t != null) list.add(t);
             }
@@ -65,6 +70,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Parses a storage line into a key-value field map.
+     *
+     * @param line String, required — a raw line from the storage file.
+     * @return Map of field names to values, or null if the line is malformed.
+     */
     private Map<String, String> parseLine(String line) {
         try {
             Map<String, String> fields = new LinkedHashMap<>();
@@ -82,8 +93,10 @@ public class Storage {
     }
 
     /**
-     * Atomically flushes TransactionList to disk.
-     * Call after every mutating command (CRUD).
+     * Atomically writes the transaction list to disk. Call after every mutating command (CRUD).
+     *
+     * @param list TransactionList, required — the list to save.
+     * @throws MoneyBagProMaxException if the file cannot be written.
      */
     public void save(TransactionList list) throws MoneyBagProMaxException {
         try {
@@ -102,6 +115,12 @@ public class Storage {
         }
     }
 
+    /**
+     * Serializes a transaction into a pipe-delimited string for storage.
+     *
+     * @param t Transaction, required — the transaction to serialize.
+     * @return String — the formatted storage line.
+     */
     private String serializeLine(Transaction t) {
         return TXN_PREFIX + " " + String.join(FIELD_SEP,
                                               "type"        + KV_SEP + t.getType(),
