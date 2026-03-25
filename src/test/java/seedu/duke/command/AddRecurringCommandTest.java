@@ -56,17 +56,19 @@ class AddRecurringCommandTest {
         Budget budget = new Budget();
 
         ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+        PrintStream original = System.out;
         System.setOut(new PrintStream(outContent));
-        Ui ui = new Ui();
-
-        AddRecurringCommand cmd = new AddRecurringCommand(
-                "invalid", 10.0, "", Frequency.DAILY, date, recurringList);
-        cmd.execute(list, budget, ui);
+        try {
+            Ui ui = new Ui();
+            AddRecurringCommand cmd = new AddRecurringCommand(
+                    "invalid", 10.0, "", Frequency.DAILY, date, recurringList);
+            cmd.execute(list, budget, ui);
+        } finally {
+            System.setOut(original);
+        }
 
         assertEquals(0, recurringList.size());
         assertTrue(outContent.toString().contains("Invalid category"));
-
-        System.setOut(System.out);
     }
 
     @Test

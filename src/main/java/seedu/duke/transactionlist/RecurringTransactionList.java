@@ -41,4 +41,9 @@ public class RecurringTransactionList {
         logger.info("Removing recurring transaction at index: " + i);
         return recurringTransactions.remove(i);
     }
+
+    public void clear() {
+        logger.info("Clearing all recurring transactions");
+        recurringTransactions.clear();
+    }
 }

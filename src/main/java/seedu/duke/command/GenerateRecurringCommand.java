@@ -2,7 +2,6 @@ package seedu.duke.command;
 
 import seedu.duke.budget.Budget;
 import seedu.duke.transaction.Expense;
-import seedu.duke.transaction.Frequency;
 import seedu.duke.transaction.Income;
 import seedu.duke.transaction.RecurringTransaction;
 import seedu.duke.transaction.Transaction;
@@ -32,13 +31,15 @@ public class GenerateRecurringCommand extends Command {
 
             while (!nextDate.isAfter(today)) {
                 Transaction t = createTransaction(rt, nextDate);
-                if (t != null) {
-                    list.add(t);
-                    ui.showMessage("Generated: " + t);
-                    generatedCount++;
+                if (t == null) {
+                    ui.showMessage("[WARN] Could not generate transaction for category: " + rt.getCategory());
+                    break;
                 }
+                list.add(t);
+                ui.showMessage("Generated: " + t);
+                generatedCount++;
                 rt.setLastGeneratedDate(nextDate);
-                nextDate = advance(nextDate, rt.getFrequency());
+                nextDate = rt.getFrequency().next(nextDate);
             }
         }
 
@@ -51,27 +52,15 @@ public class GenerateRecurringCommand extends Command {
         if (rt.getLastGeneratedDate() == null) {
             return rt.getStartDate();
         }
-        return advance(rt.getLastGeneratedDate(), rt.getFrequency());
-    }
-
-    private LocalDate advance(LocalDate date, Frequency frequency) {
-        switch (frequency) {
-        case DAILY:
-            return date.plusDays(1);
-        case WEEKLY:
-            return date.plusWeeks(1);
-        case MONTHLY:
-            return date.plusMonths(1);
-        default:
-            return date.plusMonths(1);
-        }
+        return rt.getFrequency().next(rt.getLastGeneratedDate());
     }
 
     private Transaction createTransaction(RecurringTransaction rt, LocalDate date) {
+        String category = rt.getCategory().toLowerCase();
         if (rt.isIncome()) {
-            return new Income(rt.getCategory(), rt.getAmount(), rt.getDescription(), date);
+            return new Income(category, rt.getAmount(), rt.getDescription(), date);
         } else if (rt.isExpense()) {
-            return new Expense(rt.getCategory(), rt.getAmount(), rt.getDescription(), date);
+            return new Expense(category, rt.getAmount(), rt.getDescription(), date);
         }
         return null;
     }

@@ -20,10 +20,10 @@ public class ListRecurringCommand extends Command {
             ui.showMessage("No recurring transactions found.");
             return;
         }
-        System.out.println(Ui.DIVIDER);
+        ui.showMessage(Ui.DIVIDER);
         for (int i = 0; i < recurringList.size(); i++) {
             ui.showMessage((i + 1) + ". " + recurringList.get(i));
         }
-        System.out.println(Ui.DIVIDER);
+        ui.showMessage(Ui.DIVIDER);
     }
 }

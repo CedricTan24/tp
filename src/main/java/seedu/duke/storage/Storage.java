@@ -178,18 +178,13 @@ public class Storage {
                 Files.createFile(p);
                 return;
             }
-            while (!list.isEmpty()) {
-                list.remove(0);
-            }
+            list.clear();
             for (String line : Files.readAllLines(p)) {
                 if (!line.startsWith(REC_PREFIX)) {
                     continue;
                 }
-                Map<String, String> f = parseRecurringLine(line);
-                if (f == null) {
-                    continue;
-                }
                 try {
+                    Map<String, String> f = parseRecurringLine(line);
                     String category    = f.get("category");
                     String amountStr   = f.get("amount");
                     String description = f.getOrDefault("description", "");
@@ -197,6 +192,12 @@ public class Storage {
                     String startStr    = f.get("startDate");
                     String lastStr     = f.get("lastGeneratedDate");
                     if (category == null || amountStr == null || freqStr == null || startStr == null) {
+                        continue;
+                    }
+                    if (!Income.VALID_CATEGORIES.contains(category.toLowerCase())
+                            && !Expense.VALID_CATEGORIES.contains(category.toLowerCase())) {
+                        System.out.println("[WARN] Skipping recurring line with invalid category '"
+                                + category + "': " + line);
                         continue;
                     }
                     double amount      = Double.parseDouble(amountStr);
@@ -208,7 +209,7 @@ public class Storage {
                     }
                     list.add(rt);
                 } catch (Exception e) {
-                    System.out.println("[WARN] Skipping malformed recurring line: " + e.getMessage());
+                    System.out.println("[WARN] Skipping malformed recurring line '" + line + "': " + e.getMessage());
                 }
             }
         } catch (IOException e) {
@@ -241,21 +242,17 @@ public class Storage {
 
     private Map<String, String> parseRecurringLine(String line) {
         assert line != null : "Line should not be null";
-        try {
-            Map<String, String> fields = new LinkedHashMap<>();
-            String[] parts = line.split("\\s*\\|\\s*");
-            for (int i = 1; i < parts.length; i++) {
-                int eq = parts[i].indexOf(KV_SEP);
-                if (eq < 0) {
-                    continue;
-                }
-                fields.put(parts[i].substring(0, eq).trim(),
-                           parts[i].substring(eq + 1).trim());
+        Map<String, String> fields = new LinkedHashMap<>();
+        String[] parts = line.split("\\s*\\|\\s*");
+        for (int i = 1; i < parts.length; i++) {
+            int eq = parts[i].indexOf(KV_SEP);
+            if (eq < 0) {
+                continue;
             }
-            return fields;
-        } catch (Exception e) {
-            return null;
+            fields.put(parts[i].substring(0, eq).trim(),
+                       parts[i].substring(eq + 1).trim());
         }
+        return fields;
     }
 
     private String serializeRecurringLine(RecurringTransaction rt) {

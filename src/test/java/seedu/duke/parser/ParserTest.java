@@ -115,4 +115,23 @@ class ParserTest {
         Parser parser = new Parser(new UndoRedoManager(), new RecurringTransactionList());
         assertThrows(MoneyBagProMaxException.class, () -> parser.parse("add food/10 rec/yearly"));
     }
+
+    @Test
+    public void parse_deleteRecNoArguments_throwsException() {
+        Parser parser = new Parser(new UndoRedoManager(), new RecurringTransactionList());
+        assertThrows(MoneyBagProMaxException.class, () -> parser.parse("delete-rec"));
+    }
+
+    @Test
+    public void parse_deleteRecNonNumericIndex_throwsException() {
+        Parser parser = new Parser(new UndoRedoManager(), new RecurringTransactionList());
+        assertThrows(MoneyBagProMaxException.class, () -> parser.parse("delete-rec abc"));
+    }
+
+    @Test
+    public void parse_addWithRecAndDateAfterFreq_returnsAddRecurringCommand() throws MoneyBagProMaxException {
+        Parser parser = new Parser(new UndoRedoManager(), new RecurringTransactionList());
+        Command command = parser.parse("add food/10 rec/weekly d/2026-03-01");
+        assertInstanceOf(AddRecurringCommand.class, command);
+    }
 }

@@ -36,7 +36,7 @@ class GenerateRecurringCommandTest {
     }
 
     @Test
-    public void execute_weeklyTwoWeeksAgo_generatesTwoTransactions() {
+    public void execute_weeklyOneWeekAgo_generatesTwoTransactions() {
         LocalDate startDate = LocalDate.now().minusWeeks(1);
         RecurringTransactionList recurringList = new RecurringTransactionList();
         recurringList.add(new RecurringTransaction("food", 50.0, "", Frequency.WEEKLY, startDate));
@@ -55,9 +55,13 @@ class GenerateRecurringCommandTest {
         TransactionList list = new TransactionList();
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
+        PrintStream original = System.out;
         System.setOut(new PrintStream(out));
-        new GenerateRecurringCommand(recurringList).execute(list, budget, new Ui());
-        System.setOut(System.out);
+        try {
+            new GenerateRecurringCommand(recurringList).execute(list, budget, new Ui());
+        } finally {
+            System.setOut(original);
+        }
 
         assertEquals(0, list.size());
         assertTrue(out.toString().contains("No recurring transactions are due"));
@@ -72,8 +76,9 @@ class GenerateRecurringCommandTest {
         GenerateRecurringCommand cmd = new GenerateRecurringCommand(recurringList);
 
         cmd.execute(list, budget, new Ui());
-        cmd.execute(list, budget, new Ui());
+        assertEquals(2, list.size());
 
+        cmd.execute(list, budget, new Ui());
         assertEquals(2, list.size());
     }
 
@@ -96,9 +101,13 @@ class GenerateRecurringCommandTest {
         TransactionList list = new TransactionList();
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
+        PrintStream original = System.out;
         System.setOut(new PrintStream(out));
-        new GenerateRecurringCommand(recurringList).execute(list, budget, new Ui());
-        System.setOut(System.out);
+        try {
+            new GenerateRecurringCommand(recurringList).execute(list, budget, new Ui());
+        } finally {
+            System.setOut(original);
+        }
 
         assertTrue(out.toString().contains("No recurring transactions are due"));
     }

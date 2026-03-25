@@ -13,6 +13,7 @@ public class RecurringTransaction {
     private final String description;
     private final Frequency frequency;
     private final LocalDate startDate;
+    private final String transactionType;
     private LocalDate lastGeneratedDate;
 
     public RecurringTransaction(String category, double amount, String description,
@@ -27,6 +28,7 @@ public class RecurringTransaction {
         this.description = description;
         this.frequency = frequency;
         this.startDate = startDate;
+        this.transactionType = Income.VALID_CATEGORIES.contains(category.toLowerCase()) ? "income" : "expense";
         this.lastGeneratedDate = null;
     }
 
@@ -54,16 +56,22 @@ public class RecurringTransaction {
         return lastGeneratedDate;
     }
 
-    public void setLastGeneratedDate(LocalDate lastGeneratedDate) {
-        this.lastGeneratedDate = lastGeneratedDate;
+    public String getTransactionType() {
+        return transactionType;
     }
 
-    public boolean isExpense() {
-        return Expense.VALID_CATEGORIES.contains(category.toLowerCase());
+    public void setLastGeneratedDate(LocalDate date) {
+        assert date != null : "Last generated date should not be null";
+        assert !date.isBefore(startDate) : "Last generated date should not be before start date";
+        this.lastGeneratedDate = date;
     }
 
     public boolean isIncome() {
-        return Income.VALID_CATEGORIES.contains(category.toLowerCase());
+        return "income".equals(transactionType);
+    }
+
+    public boolean isExpense() {
+        return "expense".equals(transactionType);
     }
 
     @Override

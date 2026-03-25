@@ -112,7 +112,7 @@ public class Parser {
 
             if (remainder.contains(" rec/")) {
                 Frequency frequency = parseFrequency(remainder);
-                String cleanRemainder = remainder.substring(0, remainder.indexOf(" rec/")).trim();
+                String cleanRemainder = remainder.replaceFirst(" rec/\\S+", "").trim();
                 double amount = parseAmount(cleanRemainder);
                 String description = parseDescription(cleanRemainder);
                 LocalDate date = parseDate(cleanRemainder);
