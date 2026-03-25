@@ -253,7 +253,8 @@ class StorageTest {
     void load_negativeAmount_skipped() throws MoneyBagProMaxException, IOException {
         Files.createDirectories(Paths.get("data"));
         Files.writeString(Paths.get(DATA_FILE),
-                          "[TXN] | type=expense | category=food | amount=-10.0 | description=lunch | date=2026-03-23\n");
+                          "[TXN] | type=expense | category=food | amount=-10.0"
+                                  + " | description=lunch | date=2026-03-23\n");
 
         storage.load(list);
         assertEquals(0, list.size());
@@ -313,9 +314,12 @@ class StorageTest {
     void load_corruptedAndValidMixed_onlyValidLoaded() throws MoneyBagProMaxException, IOException {
         Files.createDirectories(Paths.get("data"));
         Files.writeString(Paths.get(DATA_FILE),
-                          "[TXN] | type=expense | category=food | amount=10.0 | description=lunch | date=2026-03-23\n"
-                                  + "[TXN] | type=expense | category=food | amount=-5.0 | description=bad | date=2026-03-23\n"
-                                  + "[TXN] | type=income | category=salary | amount=3000.0 | description=pay | date=2026-03-01\n");
+                          "[TXN] | type=expense | category=food | amount=10.0"
+                                  + " | description=lunch | date=2026-03-23\n"
+                                  + "[TXN] | type=expense | category=food | amount=-5.0"
+                                  + " | description=bad | date=2026-03-23\n"
+                                  + "[TXN] | type=income | category=salary | amount=3000.0"
+                                  + " | description=pay | date=2026-03-01\n");
 
         storage.load(list);
         assertEquals(2, list.size());
