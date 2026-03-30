@@ -143,9 +143,9 @@ public class Storage {
         LocalDate date = validateDate(dateStr, line);
 
         return switch (type) {
-            case "income" -> new Income(category, amount, description, date);
-            case "expense" -> new Expense(category, amount, description, date);
-            default -> null;
+        case "income" -> new Income(category, amount, description, date);
+        case "expense" -> new Expense(category, amount, description, date);
+        default -> null;
         };
     }
 
