@@ -60,47 +60,29 @@ respective system [here](https://www.oracle.com/java/technologies/javase/jdk17-a
 ---
 
 ### Adding an Expense: `add [expense-category]`
-Adds an expense transaction to your list.
+(// add description here)
 
-**Format**: `add [expense-category]/PRICE [desc/DESCRIPTION] [d/YYYY-MM-DD]`
-
-**Valid expense categories**: `food`, `transport`, `utilities`, `education`, `rent`, `medical`, `misc`
+**Format**:
 
 **Examples**:
-- `add food/10 desc/lunch d/2025-03-01` Adds a food expense of $10.00 described as *"lunch"* on 1st March 2025.
-- `add transport/3.50` Adds a transport expense of $3.50 with today's date and no description.
-
-> [!TIP]
-> The `desc/` and `d/` fields are optional. If the date is omitted, today's date will be used automatically.
 
 ---
 
 ### Adding an Income: `add [income-category]`
-Adds an income transaction to your list.
+(// add description here)
 
-**Format**: `add [income-category]/PRICE [desc/DESCRIPTION] [d/YYYY-MM-DD]`
-
-**Valid income categories**: `salary`, `freelance`, `investment`, `business`, `gift`, `misc`
+**Format**: 
 
 **Examples**:
-- `add salary/500 desc/allowance d/2026-03-01` Adds a salary income of $500.00 described as *"allowance"* on 1st March 2026.
-- `add freelance/150` Adds a freelance income of $150.00 with today's date and no description.
-
-> [!TIP]
-> The `desc/` and `d/` fields are optional. If the date is omitted, today's date will be used automatically.
 
 ---
 
 ### Listing all Transactions: `list`
-Displays all current transactions saved in the application, including both expenses and income.
+(// add description here)
 
-**Format**: `list`
+**Format**:
 
 **Examples**:
-- `list` Lists all transactions with their index numbers, categories, amounts, descriptions, and dates.
-
-> [!TIP]
-> Take note of the index numbers shown in the list — you will need them for `delete`, `edit`, and other index-based commands.
 
 ---
 
@@ -133,106 +115,64 @@ Displays overall totals or specific category totals for your transactions.
 ---
 
 ### Sorting Transactions: `sort`
-Sorts and displays all transactions by the given criteria.
+(// add description here)
 
-**Format**: `sort by/CRITERIA`
-
-**Valid criteria**: `date`, `amount`, `category`
+**Format**:
 
 **Examples**:
-- `sort by/date` Displays all transactions sorted from earliest to latest date.
-- `sort by/amount` Displays all transactions sorted by amount.
-- `sort by/category` Displays all transactions sorted alphabetically by category.
-
-> [!NOTE]
-> Sorting only affects the display order. The original list order and index numbers remain unchanged.
 
 ---
 
 ### Deleting a Transaction: `delete`
-Removes a transaction from the list using its index number.
+(// add description here)
 
 **Format**: `delete ENTRY_INDEX`
 
 **Examples**:
-- `delete 3` Deletes the 3rd transaction in the list.
-
-> [!TIP]
-> Use `list` first to find the correct index number of the transaction you wish to delete.
 
 ---
 
 ### Editing a Transaction: `edit`
-Replaces an existing transaction at the specified index with new values.
+(// add description here)
 
-**Format**: `edit INDEX [category]/PRICE [desc/DESCRIPTION] [d/YYYY-MM-DD]`
-
-- The category must be a valid expense or income category.
-- The same optional `desc/` and `d/` rules from `add` apply here.
+**Format**:
 
 **Examples**:
-- `edit 3 food/20 desc/dinner d/2026-03-20` Replaces the 3rd transaction with a food expense of $20.00 described as *"dinner"* on 20th March 2026.
-
-> [!TIP]
-> Use `list` first to find the correct index number of the transaction you wish to edit.
-
 ---
 
 ### Undoing an Action: `undo`
-Reverses the last `add` or `delete` action performed.
+(// add description here)
 
-**Format**: `undo`
+**Format**:
 
 **Examples**:
-- `undo` Undoes the most recent add or delete action.
-
-> [!NOTE]
-> Only `add` and `delete` actions can be undone. Other operations such as `edit` or `sort` cannot be reversed with `undo`.
 
 ---
 
 ### Redoing an Action: `redo`
-Re-applies the last action that was undone with `undo`.
+(// add description here)
 
-**Format**: `redo`
+**Format**:
 
 **Examples**:
-- `redo` Re-applies the most recently undone action.
-
-> [!NOTE]
-> `redo` is only available immediately after an `undo`. Performing any new action will clear the redo history.
 
 ---
 
 ### Managing your Budget: `budget`
-Sets a monthly spending limit or checks your current budget status.
+(// add description here)
 
 **Format**:
-- `budget set AMOUNT` — Sets your monthly budget to the specified amount.
-- `budget status` — Displays your current budget, amount spent, remaining balance, and a progress bar.
 
 **Examples**:
-- `budget set 1000` Sets your monthly budget to $1000.00.
-- `budget status` Shows how much of your budget has been used this month.
-
-> [!TIP]
-> Use `budget status` regularly to stay on top of your spending and avoid going over budget!
 
 ---
 
 ### Viewing Spending Statistics: `stats`
-Displays spending analytics based on your recorded transactions.
+(// add description here)
 
-**Format**: `stats`
-
-Includes:
-- Highest and lowest transaction amounts
-- Most frequently used expense category
-- Average spending per category
-- Overall spending trend
+**Format**:
 
 **Examples**:
-- `stats` Displays a full analytics breakdown of your transactions.
 
 ---
 
@@ -250,12 +190,11 @@ Filters and displays only the transactions that fall within a specified date ran
 ---
 
 ### Exiting the Application: `exit`
-Exits the MoneyBagProMax application.
+(// add description here)
 
-**Format**: `exit`
+**Format**:
 
 **Examples**:
-- `exit` Closes the application.
 
 ---
 
