@@ -12,7 +12,7 @@ import seedu.duke.undoredo.UndoRedoManager;
 import java.time.LocalDate;
 
 /**
- * Used for editing an existing transaction based on the index provided
+ * Used for editing an existing transaction based on the index provided.
  */
 public class EditCommand extends Command {
 
@@ -25,12 +25,12 @@ public class EditCommand extends Command {
 
     /**
      * Edit an existing command by the following provided parameters
-     * @param targetIndex index of the transaction being edited
-     * @param category category of the edited transaction
-     * @param amount amount of the edited transaction   
-     * @param description description of the edited transaction
-     * @param date date of the edited transaction
-     * @param undoRedoManager for keeping track of undo redo
+     * @param targetIndex index of the transaction being edited.
+     * @param category category of the edited transaction.
+     * @param amount amount of the edited transaction.
+     * @param description description of the edited transaction.
+     * @param date date of the edited transaction.
+     * @param undoRedoManager for keeping track of undo redo.
      */
     public EditCommand(int targetIndex, String category, double amount,
                        String description, LocalDate date, UndoRedoManager undoRedoManager) {
@@ -50,10 +50,10 @@ public class EditCommand extends Command {
 
     /**
      * Runs the actual edit action
-     * @param list The current list of transactions
-     * @param budget The current budget to adjust accordingly
-     * @param ui   The ui instance
-     * @throws MoneyBagProMaxException exception for invalid transactions
+     * @param list The current list of transactions.
+     * @param budget The current budget to adjust accordingly.
+     * @param ui   The ui instance.
+     * @throws MoneyBagProMaxException exception for invalid transactions.
      */
     @Override
     public void execute(TransactionList list, Budget budget, Ui ui) throws MoneyBagProMaxException {
